@@ -1,6 +1,3 @@
-from tabnanny import verbose
-from unicodedata import category
-from wsgiref.validate import validator
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import validate_slug, MaxValueValidator, MinValueValidator
