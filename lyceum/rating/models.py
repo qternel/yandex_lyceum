@@ -1,5 +1,3 @@
-from tabnanny import verbose
-from tkinter import CASCADE
 from django.db import models
 from django.core.validators import MinValueValidator
 from django.forms import IntegerField
