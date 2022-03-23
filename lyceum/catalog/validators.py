@@ -1,11 +1,10 @@
 from django.forms import ValidationError
 
-def validate_correct(value):
-    word_list = {'превосходно', 'роскошно'}
-    text = set(value.lower().split())
-    difference = word_list - text #множество, состоящее из разницы
-    if len(difference) == len(word_list):
-        raise ValidationError(f'Необходимо использовать слова : {word_list}')
-    
-    if len(text) < 2:
-        raise ValidationError('Необходимо использовать минимум 2 слова.')
+
+def validate_text(value):
+    word_list = {'Превосходно', 'Роскошно'}
+    if len(value.split()) < 2:
+        raise ValidationError('В строке должно быть минимум 2 слова')
+
+    if not any(filter(lambda x: x.lower() in value.lower(), word_list)):
+        raise ValidationError(f'Используйте в описании слова {word_list}')

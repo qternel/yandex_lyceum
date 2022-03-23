@@ -18,10 +18,13 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Category',
             fields=[
-                ('id', models.PositiveIntegerField(default=1, primary_key=True, serialize=False, validators=[django.core.validators.MinValueValidator(1)])),
+                ('id', models.PositiveIntegerField(default=1, primary_key=True,
+                 serialize=False, validators=[django.core.validators.MinValueValidator(1)])),
                 ('is_published', models.BooleanField(default=True)),
-                ('slug', models.TextField(max_length=200, unique=True, validators=[django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'), 'Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.', 'invalid')])),
-                ('weight', models.PositiveIntegerField(default=100, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(32767)])),
+                ('slug', models.TextField(max_length=200, unique=True, validators=[django.core.validators.RegexValidator(re.compile(
+                    '^[-a-zA-Z0-9_]+\\Z'), 'Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.', 'invalid')])),
+                ('weight', models.PositiveIntegerField(default=100, validators=[
+                 django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(32767)])),
             ],
             options={
                 'verbose_name': 'Категория',
@@ -31,9 +34,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Tag',
             fields=[
-                ('id', models.PositiveIntegerField(default=1, primary_key=True, serialize=False, validators=[django.core.validators.MinValueValidator(1)])),
+                ('id', models.PositiveIntegerField(default=1, primary_key=True,
+                 serialize=False, validators=[django.core.validators.MinValueValidator(1)])),
                 ('is_published', models.BooleanField(default=True)),
-                ('slug', models.TextField(max_length=200, unique=True, validators=[django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'), 'Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.', 'invalid')])),
+                ('slug', models.TextField(max_length=200, unique=True, validators=[django.core.validators.RegexValidator(re.compile(
+                    '^[-a-zA-Z0-9_]+\\Z'), 'Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.', 'invalid')])),
             ],
             options={
                 'verbose_name': 'Тег',
@@ -43,11 +48,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Item',
             fields=[
-                ('id', models.PositiveIntegerField(default=1, primary_key=True, serialize=False, validators=[django.core.validators.MinValueValidator(1)])),
+                ('id', models.PositiveIntegerField(default=1, primary_key=True,
+                 serialize=False, validators=[django.core.validators.MinValueValidator(1)])),
                 ('is_published', models.BooleanField(default=True)),
                 ('name', models.CharField(max_length=150)),
-                ('text', models.TextField(validators=[catalog.validators.validate_correct])),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='catalog.category')),
+                ('text', models.TextField(validators=[
+                 catalog.validators.validate_text])),
+                ('category', models.ForeignKey(blank=True, null=True,
+                 on_delete=django.db.models.deletion.CASCADE, to='catalog.category')),
                 ('tags', models.ManyToManyField(blank=True, to='catalog.Tag')),
             ],
             options={
