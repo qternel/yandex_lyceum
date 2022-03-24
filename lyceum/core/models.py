@@ -3,12 +3,16 @@ from django.core.validators import validate_slug
 
 
 class CustomModel(models.Model):
-    is_published = models.BooleanField(default=True)
-    slug = models.TextField(max_length=200, unique=True,
-                            validators=[validate_slug])
+    is_published = models.BooleanField(verbose_name ='Опубликовано',default=True)
+    
 
-    def __str__(self):
-        return self.slug
+
+    class Meta:
+        abstract = True
+
+class CustomModelSlug(CustomModel):
+    slug = models.TextField(verbose_name = 'Название' ,max_length=200, unique=True,
+                            validators=[validate_slug])
 
     class Meta:
         abstract = True

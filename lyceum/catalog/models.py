@@ -1,15 +1,14 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.core.validators import validate_slug, MaxValueValidator, MinValueValidator
+from django.core.validators import validate_slug
 from .validators import validate_text
-from core.models import CustomModel
+from core.models import CustomModel, CustomModelSlug
 User = get_user_model()
 
 
-class Item(models.Model):
+class Item(CustomModel):
 
-    is_published = models.BooleanField(
-        verbose_name='Опубликовано', default=True)
+    
     name = models.CharField(verbose_name='Название', max_length=150)
     text = models.TextField(verbose_name='Описание',
                             validators=[validate_text])
@@ -21,23 +20,31 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+        
 
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 
 
-class Tag(CustomModel):
+class Tag(CustomModelSlug):
+
+    def __str__(self):
+        return self.slug
 
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
+    
+class Category(CustomModelSlug):
 
-class Category(CustomModel):
+    weight = models.PositiveSmallIntegerField(verbose_name='Вес',
+        default=100)
 
-    weight = models.PositiveIntegerField(
-        default=100, validators=[MinValueValidator(1), MaxValueValidator(32767)])
+    def __str__(self):
+        return self.slug
+
 
     class Meta:
         verbose_name = 'Категория'
