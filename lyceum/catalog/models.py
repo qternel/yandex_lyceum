@@ -8,7 +8,6 @@ User = get_user_model()
 
 class Item(CustomModel):
 
-    
     name = models.CharField(verbose_name='Название', max_length=150)
     text = models.TextField(verbose_name='Описание',
                             validators=[validate_text])
@@ -20,7 +19,6 @@ class Item(CustomModel):
 
     def __str__(self):
         return self.name
-        
 
     class Meta:
         verbose_name = 'Товар'
@@ -36,15 +34,14 @@ class Tag(CustomModelSlug):
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
 
-    
+
 class Category(CustomModelSlug):
 
     weight = models.PositiveSmallIntegerField(verbose_name='Вес',
-        default=100)
+                                              default=100)
 
     def __str__(self):
         return self.slug
-
 
     class Meta:
         verbose_name = 'Категория'

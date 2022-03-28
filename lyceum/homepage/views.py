@@ -1,9 +1,10 @@
-from urllib import response
+from multiprocessing import context
 from django.shortcuts import render
 from django.http import HttpResponse
-from http import HTTPStatus
-# Create your views here.
+
 
 
 def home(request):
-    return HttpResponse('Главная')
+    template = 'homepage/home.html'
+    context = {}
+    return render(request, template, context)
