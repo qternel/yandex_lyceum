@@ -1,8 +1,10 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-from django.core.validators import validate_slug
-from .validators import validate_text
+from django.db import models
+
 from core.models import CustomModel, CustomModelSlug
+
+from .validators import validate_text
+
 User = get_user_model()
 
 
@@ -15,7 +17,12 @@ class Item(CustomModel):
     tags = models.ManyToManyField(
         'Tag', verbose_name='теги', related_name='tags', blank=True)
     category = models.ForeignKey(
-        'Category', verbose_name='Категория', related_name='category', on_delete=models.CASCADE, blank=True, null=True)
+        'Category',
+        verbose_name='Категория',
+        related_name='category',
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True)
 
     def __str__(self):
         return self.name

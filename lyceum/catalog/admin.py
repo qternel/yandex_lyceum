@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Item
-from .models import Tag
-from .models import Category
+
+from .models import Category, Item, Tag
+
 # Register your models here.
 
 

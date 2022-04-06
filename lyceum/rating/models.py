@@ -1,9 +1,9 @@
-from django.db import models
-from django.core.validators import MinValueValidator
 from django.contrib.auth import get_user_model
-from catalog.models import Item
-from catalog.models import User
+from django.core.validators import MinValueValidator
+from django.db import models
 from django.db.models import UniqueConstraint
+
+from catalog.models import Item, User
 
 
 class Rating(models.Model):
@@ -18,8 +18,12 @@ class Rating(models.Model):
     star = models.IntegerField(
         verbose_name='Оценка', null=True, choices=EMOTION_TYPES)
     user = models.ForeignKey(
-        User, verbose_name='Пользователь', related_name='user', on_delete=models.CASCADE, null=True)
-    item = models.ForeignKey(Item,  verbose_name='Товар', related_name='item',
+        User,
+        verbose_name='Пользователь',
+        related_name='user',
+        on_delete=models.CASCADE,
+        null=True)
+    item = models.ForeignKey(Item, verbose_name='Товар', related_name='item',
                              on_delete=models.CASCADE, null=True)
 
     def __str__(self):

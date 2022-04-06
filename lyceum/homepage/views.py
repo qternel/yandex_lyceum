@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from catalog.models import Item
@@ -6,7 +5,10 @@ from catalog.models import Item
 
 def home(request):
     template = 'homepage/home.html'
+    random_items_count = 3
     items = Item.objects.filter(
-        is_published=True).prefetch_related('tags').only('name', 'text', 'tags').order_by('?')[0:3]
+        is_published=True).prefetch_related('tags').only(
+        'name', 'text', 'tags').order_by('?')[
+            0:random_items_count]
     context = {'items': items}
     return render(request, template, context)

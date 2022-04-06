@@ -13,11 +13,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='category',
             name='name',
-            field=models.CharField(default='', max_length=150, verbose_name='Название'),
+            field=models.CharField(
+                default='', max_length=150, verbose_name='Название'),
         ),
         migrations.AddField(
             model_name='tag',
             name='name',
-            field=models.CharField(default='', max_length=150, verbose_name='Название'),
+            field=models.CharField(
+                default='', max_length=150, verbose_name='Название'),
         ),
     ]

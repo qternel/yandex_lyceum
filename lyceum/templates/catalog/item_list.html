@@ -1,6 +1,7 @@
-{% extends 'base.html' %} {%block title%}Список товаров{% endblock %} 
+{% extends 'includes/base.html' %} 
+{%block title%}Список товаров{% endblock %} 
 {% block content %}
 
 <h1>Список товаров</h1>
-{% include 'item.html' %}
+{% include 'includes/item_card.html' %}
 {% endblock %}

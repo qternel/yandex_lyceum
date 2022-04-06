@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name='rating',
-            constraint=models.UniqueConstraint(fields=('user', 'item'), name='unique_rating'),
+            constraint=models.UniqueConstraint(
+                fields=('user', 'item'), name='unique_rating'),
         ),
     ]
