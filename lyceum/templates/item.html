@@ -1,0 +1,12 @@
+{% for item in items %}
+<div>
+  <h3>{{ item.name }}</h3>
+  <p>{{ item.text|truncatewords:10 }}</p>
+  {% for tag in item.tags.all %}
+  <ul>
+    <li>{{ tag.name }}</li>
+  </ul>
+  {% endfor %} {% empty %}
+  <p>Список пуст. Эй, админ, добавь инфы!</p>
+  {% endfor %}
+</div>

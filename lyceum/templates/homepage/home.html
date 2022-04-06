@@ -1,11 +1,6 @@
-{% extends 'base.html' %}
-
-
-{% block title %}Главная{% endblock %}
-
+{% extends "base.html" %} {% block title %}Главная{% endblock %} 
 {% block content %}
- 
 <h1>Главная страница</h1>
-
+<h2>Мы рекомендуем:</h2>
+{% include 'item.html' %}
 {% endblock %}
-

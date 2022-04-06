@@ -11,6 +11,7 @@ class CustomModel(models.Model):
         abstract = True
 
 class CustomModelSlug(CustomModel):
+    name = models.CharField(verbose_name='Название', max_length=150, default='')
     slug = models.TextField(verbose_name = 'Название' ,max_length=200, unique=True,
                             validators=[validate_slug])
 

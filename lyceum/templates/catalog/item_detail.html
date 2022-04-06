@@ -5,4 +5,17 @@
 
 <h1>Подробное описание товара</h1>
 
+ <div>
+  <h3>{{ item.name }}</h3>
+  <p>{{ item.text }}</p> 
+  
+  <p>{{ item.category.name }}</p>
+ {% for tag in item.tags.all %}
+  <ul>
+    <li>{{ tag.name }}</li>
+  </ul>
+  {% endfor %} 
+  
+</div> 
+
 {% endblock %}
