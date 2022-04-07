@@ -8,7 +8,7 @@ def home(request):
     random_items_count = 3
     items = Item.objects.filter(
         is_published=True).prefetch_related('tags').only(
-        'name', 'text', 'tags').order_by('?')[
-            0:random_items_count]
+        'name', 'text', 'tags__name').order_by('?')[
+            :random_items_count]
     context = {'items': items}
     return render(request, template, context)

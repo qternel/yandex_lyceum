@@ -7,7 +7,7 @@ from catalog.models import Item, Tag
 def item_list(request):
     template = 'catalog/item_list.html'
     items = Item.objects.filter(is_published=True).prefetch_related(
-        'tags').only('name', 'text', 'tags')
+        'tags').only('name', 'text', 'tags__name')
     context = {'items': items}
     return render(request, template, context)
 
@@ -23,7 +23,7 @@ def item_detail(request, pk):
             'name',
             'text',
             'category',
-            'tags'),
+            'tags__name'),
         pk=pk)
     context = {'item': item}
     return render(request, template, context)
