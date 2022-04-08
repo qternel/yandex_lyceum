@@ -5,13 +5,13 @@ from catalog.models import Item, Tag
 
 
 def home(request):
-    template = 'homepage/home.html'
-    random_items_count = 3
+    TEMPLATE = 'homepage/home.html'
+    RANDOM_ITEMS_COUNT = 3
     items = Item.objects.filter(
         is_published=True).prefetch_related(
         Prefetch(
             'tags',
             queryset=Tag.objects.filter(
-                is_published=True))).order_by('?')[:random_items_count]
+                is_published=True))).order_by('?')[:RANDOM_ITEMS_COUNT]
     context = {'items': items}
-    return render(request, template, context)
+    return render(request, TEMPLATE, context)

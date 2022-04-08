@@ -1,7 +1,5 @@
-from django.db import models
-
-
 from catalog.models import Item, User
+from django.db import models
 
 
 class Rating(models.Model):
