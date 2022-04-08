@@ -6,8 +6,11 @@ from catalog.models import Item, Tag
 
 def item_list(request):
     template = 'catalog/item_list.html'
-    items = Item.objects.filter(is_published=True).prefetch_related(
-        'tags').only('name', 'text', 'tags__name')
+    items = Item.objects.filter(
+        is_published=True).prefetch_related(
+        Prefetch('tags',
+                 queryset=Tag.objects.filter(
+                     is_published=True).only("name")))
     context = {'items': items}
     return render(request, template, context)
 
@@ -19,11 +22,7 @@ def item_detail(request, pk):
             Prefetch(
                 'tags',
                 queryset=Tag.objects.filter(
-                    is_published=True))).only(
-            'name',
-            'text',
-            'category',
-            'tags__name'),
+                    is_published=True).only('name'))),
         pk=pk)
     context = {'item': item}
     return render(request, template, context)
