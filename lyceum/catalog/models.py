@@ -1,7 +1,8 @@
+from core.models import CustomModel, CustomModelSlug
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Prefetch
-from core.models import CustomModel, CustomModelSlug
+
 from .validators import validate_text
 
 User = get_user_model()
