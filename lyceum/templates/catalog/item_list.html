@@ -4,13 +4,16 @@
 {% endblock %}
 
 {% block content %}
-<h1>Список товаров</h1>        
+
+<h1>Список товаров</h1>
 {% for category in categories %}
+{% if category.items.count %}
     <h3>{{ category.name }}</h3>
     {% with items=category.items.all %}
         {% include 'includes/item_card.html' %}
     {% endwith %}
-    {% empty %}
-    <h3>Список пуст. Эй, админ, добавь инфы!</h3>
+{% endif %}
+{% empty %}
+<h3>Список пуст. Эй, админ, добавь инфы!</h3>
 {% endfor %} 
 {% endblock %}

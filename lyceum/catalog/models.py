@@ -12,12 +12,12 @@ class CategoryManager(models.Manager):
     def published_category(self):
         return self.filter(is_published=True).prefetch_related(
             Prefetch('items', queryset=Item.objects.published_items())
-        ).only('name').order_by('weight')
-
+        ).order_by('weight').only('name')
+        
 
 class ItemManager(models.Manager):
     def published_items(self):
-        return self.select_related('category').only(
+        return self.filter(is_published=True).select_related('category').only(
             'name',
             'text',
             'category__name',
@@ -25,7 +25,8 @@ class ItemManager(models.Manager):
             Prefetch(
                 'tags',
                 queryset=Tag.objects.filter(
-                    is_published=True).only('name')))
+                is_published=True).only('name')))
+        
 
 
 class TagManager(models.Manager):
@@ -45,8 +46,7 @@ class Item(CustomModel):
         verbose_name='Категория',
         related_name='items',
         on_delete=models.CASCADE,
-        blank=True,
-        null=True)
+        )
 
     objects = ItemManager()
 
