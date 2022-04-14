@@ -1,6 +1,11 @@
-from django.shortcuts import get_object_or_404, render
+from django.db.models import Avg, Count, Prefetch
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
+from django.views.generic import View
+from rating.models import Rating
 
-from catalog.models import Category, Item
+from catalog.forms import SelectStarForm
+from catalog.models import Category, Item, Tag
 
 
 def item_list(request):
@@ -12,10 +17,36 @@ def item_list(request):
 
 def item_detail(request, pk):
     TEMPLATE = 'catalog/item_detail.html'
+    if request.method == 'POST':
+        item = get_object_or_404(
+            Item.objects.published_items(),
+            pk=pk,
+            is_published=True)
+
+    star_form = SelectStarForm(request.POST)
+    if star_form.is_valid() and request.user.is_authenticated:
+        Rating.objects.update_or_create(
+            item=item, user=request.user, defaults={
+                'star': star_form.cleaned_data['star']})
+        return redirect('item_detail', pk)
+
     item = get_object_or_404(
-        Item.objects.published_items(),
+        Item.objects.select_related('category').prefetch_related(
+            Prefetch(
+                'tags',
+                queryset=Tag.objects.published_tags())).only(
+            'name',
+            'text',
+            'category__name',
+            'tags__name'),
         pk=pk,
         is_published=True)
+    stars = item.raiting.exclude(star=0).aggregate(Avg('star'), Count('star'))
+    user_star = 0
+    if request.user.is_authenticated:
+        user_star = Rating.objects.only('star').filter(
+            item=item, user=request.user).first()
 
-    context = {'item': item}
+    context = {'item': item, 'stars': stars,
+               'user_star': user_star, 'form': SelectStarForm()}
     return render(request, TEMPLATE, context)

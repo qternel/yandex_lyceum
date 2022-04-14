@@ -1,11 +1,11 @@
-from django.db import models
-
 from catalog.models import Item, User
+from django.db import models
 
 
 class Rating(models.Model):
 
     EMOTION_TYPES = (
+        (0, 'Оценка отсутствует'),
         (1, 'Ненависть'),
         (2, 'Неприязнь'),
         (3, 'Нейтрально'),
@@ -20,7 +20,7 @@ class Rating(models.Model):
         related_name='user',
         on_delete=models.CASCADE,
         null=True)
-    item = models.ForeignKey(Item, verbose_name='Товар', related_name='item',
+    item = models.ForeignKey(Item, verbose_name='Товар', related_name='raiting',
                              on_delete=models.CASCADE, null=True)
 
     def __str__(self):

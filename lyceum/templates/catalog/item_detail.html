@@ -5,6 +5,31 @@
 
 <h1>Подробное описание товара</h1>
 
+<h3>{% if stars.star__avg %}{{ stars.star__avg }}{% else %}0.0{% endif %} звезд / оценок {{ stars.star__count }}</h3>
+
+
+
+  {% if user.is_authenticated %}
+  <form method='post'>
+    {% csrf_token %}
+    {% for value, text in form.star.field.choices %}
+      <div>
+        <input type="radio" name="star" id="rbSelect{{ value }}"
+             value="{{ value }}"
+             {% if user_star == value %}checked{% endif %}>
+        <label for="rbSelect{{ value }}">
+          {{ text }}
+        </label>
+      </div>
+    {% endfor %}
+    <button type="submit">{% if user_star == 0 %}Оценить{% else %}Изменить оценку{% endif %}</button>
+  </form>
+{% endif %}
+
+
+
+
+
  <div>
   <h3>{{ item.name }}</h3>
   <p>{{ item.text }}</p> 
