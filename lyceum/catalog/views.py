@@ -1,11 +1,9 @@
-from django.db.models import Avg, Count, Prefetch
+from django.db.models import Avg, Count
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.decorators.http import require_POST
-from django.views.generic import View
 from rating.models import Rating
 
 from catalog.forms import SelectStarForm
-from catalog.models import Category, Item, Tag
+from catalog.models import Category, Item
 
 
 def item_list(request):
