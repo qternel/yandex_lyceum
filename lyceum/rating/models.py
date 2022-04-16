@@ -20,7 +20,7 @@ class Rating(models.Model):
         related_name='user',
         on_delete=models.CASCADE,
         null=True)
-    item = models.ForeignKey(Item, verbose_name='Товар', related_name='raiting',
+    item = models.ForeignKey(Item, verbose_name='Товар', related_name='rating',
                              on_delete=models.CASCADE, null=True)
 
     def __str__(self):

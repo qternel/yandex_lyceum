@@ -17,31 +17,25 @@ def item_list(request):
 
 def item_detail(request, pk):
     TEMPLATE = 'catalog/item_detail.html'
-    if request.method == 'POST':
-        item = get_object_or_404(
+    # if request.method == 'POST':
+    #     item = get_object_or_404(
+    #         Item.objects.published_items(),
+    #         pk=pk,
+    #         is_published=True)
+    item = get_object_or_404(
             Item.objects.published_items(),
             pk=pk,
             is_published=True)
-
-    star_form = SelectStarForm(request.POST)
+    # star_form = SelectStarForm(request.POST)
+    star_form = SelectStarForm(request.POST or None)
     if star_form.is_valid() and request.user.is_authenticated:
         Rating.objects.update_or_create(
             item=item, user=request.user, defaults={
                 'star': star_form.cleaned_data['star']})
         return redirect('item_detail', pk)
 
-    item = get_object_or_404(
-        Item.objects.select_related('category').prefetch_related(
-            Prefetch(
-                'tags',
-                queryset=Tag.objects.published_tags())).only(
-            'name',
-            'text',
-            'category__name',
-            'tags__name'),
-        pk=pk,
-        is_published=True)
-    stars = item.raiting.exclude(star=0).aggregate(Avg('star'), Count('star'))
+    
+    stars = item.rating.exclude(star=0).aggregate(Avg('star'), Count('star'))
     user_star = 0
     if request.user.is_authenticated:
         user_star = Rating.objects.only('star').filter(
