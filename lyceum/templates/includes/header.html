@@ -1,4 +1,20 @@
 <header>
   <p>Место для логотипа</p>
   <nav>Навигация</nav>
+  <p><a href="{% url 'homepage' %}">Главная</a></p>
+  {% if request.user.is_authenticated %}
+  <li>
+    <a href="{% url 'profile_page' %}">Профиль</a>
+  </li>
+  <li>
+    <a href="{% url 'logout' %}">Выйти</a>
+  </li>
+  {% else %}
+  <li>
+    <a href="{% url 'login' %}">Войти</a>
+  </li>
+  <li>
+    <a href="{% url 'signup' %}">Регистрация</a>
+  </li>
+  {% endif %}
 </header>

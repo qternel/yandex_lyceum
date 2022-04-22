@@ -1,0 +1,16 @@
+{% extends 'users/includes/form_page.html' %}
+
+
+{% block title %}
+    Вход
+{% endblock %}
+
+{% block form_title %}
+    Вход
+{% endblock %}
+
+{% block buttons %}
+    <button type="submit">Войти</button>
+    <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+    <a href="{% url 'signup' %}">Регистрация</a>
+{% endblock %}
