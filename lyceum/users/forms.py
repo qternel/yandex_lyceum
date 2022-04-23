@@ -17,7 +17,7 @@ class UserRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        fields = ('username', )
 
     def clean_password_repeat(self):
         data_cleaned = self.cleaned_data
@@ -30,6 +30,14 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).exists():
+            raise forms.ValidationError(
+                u'Пользователь с таким электронным адресом уже существует')
+        return email
 
 
 class ProfileForm(forms.ModelForm):
